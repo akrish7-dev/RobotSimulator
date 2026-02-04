@@ -1,11 +1,58 @@
-﻿namespace RobotSimulator;
+﻿using static System.Runtime.InteropServices.JavaScript.JSType;
+
+using RobotSimulator.Services;
+
+namespace RobotSimulator;
 
 class Program
 {
     static void Main(string[] args)
     {
         var simulator = new Services.RobotSimulator();
-        RunInteractive(simulator);
+
+        if (args.Length > 0)
+        {
+            // File input mode
+            RunFromFile(simulator, args[0]);
+        }
+        else
+        {
+            // Interactive mode
+            RunInteractive(simulator);
+        }
+    }
+
+    private static void RunFromFile(Services.RobotSimulator simulator, string filePath)
+    {
+        try
+        {
+            if (!File.Exists(filePath))
+            {
+                Console.WriteLine($"Error: File '{filePath}' not found.");
+                return;
+            }
+
+            var commands = File.ReadAllLines(filePath);
+            Console.WriteLine($"Reading commands from: { filePath}");
+            Console.WriteLine();
+
+            foreach (var command in commands)
+            {
+                if (string.IsNullOrWhiteSpace(command))
+                    continue;
+
+                Console.WriteLine($" > { command}");
+                var result = simulator.ExecuteCommand(command.Trim());
+                if (!string.IsNullOrEmpty(result))
+                {
+                    Console.WriteLine(result);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error reading file: { ex.Message}");
+        }
     }
 
     private static void RunInteractive(Services.RobotSimulator simulator)

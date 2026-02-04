@@ -1,0 +1,64 @@
+# Example 1: Basic movement
+PLACE 0,0,NORTH
+MOVE
+REPORT
+
+# Example 2: Rotation
+PLACE 0,0,NORTH
+LEFT
+REPORT
+
+# Example 3: Multiple moves
+PLACE 1,2,EAST
+MOVE
+MOVE
+LEFT
+MOVE
+REPORT
+
+# Example 4: Boundary testing (should not fall off)
+PLACE 0,0,SOUTH
+MOVE
+REPORT
+
+# Example 5: Square movement
+PLACE 1,1,NORTH
+MOVE
+RIGHT
+MOVE
+RIGHT
+MOVE
+RIGHT
+MOVE
+REPORT
+
+# Example 6: Commands before PLACE (should be ignored)
+MOVE
+LEFT
+RIGHT
+REPORT
+PLACE 2,2,WEST
+REPORT
+
+# Example 7: Edge to edge
+PLACE 0,0,EAST
+MOVE
+MOVE
+MOVE
+MOVE
+REPORT
+
+# Example 8: Multiple rotations
+PLACE 2,2,NORTH
+RIGHT
+RIGHT
+RIGHT
+RIGHT
+REPORT
+
+# Example 9: Corner placement
+PLACE 4,4,NORTH
+MOVE
+RIGHT
+MOVE
+REPORT
